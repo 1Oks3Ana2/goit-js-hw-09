@@ -1,19 +1,9 @@
 import Notiflix from 'notiflix';
 
-// const refs = {
-//   form: document.querySelector('.form'),
-//   submitBtn: document.querySelector('[type="submit"]'),
-//   firstDelayInput: document.querySelector('[name="delay"]'),
-//   stepInput: document.querySelector('[name="step"]'),
-//   amountInput: document.querySelector('[name="amount"]'),
-// };
-
 const formRef = document.querySelector('.form');
 
 formRef.addEventListener('submit', e => {
   e.preventDefault();
-
-  // console.log(formRef.elements);
 
   const delay = Number(formRef.elements.delay.value);
   const step = Number(formRef.elements.step.value);
@@ -23,20 +13,19 @@ formRef.addEventListener('submit', e => {
   let promiseDelay = delay;
 
   for (let i = 1; i <= amount; i += 1) {
-    position += i;
+    position += 1;
 
+    if (position === 1) {
+      promiseDelay = delay;
+    }
     promiseDelay += step;
 
     createPromise(position, promiseDelay)
-      .then(({ position, delay }) => {
-        Notiflix.Notify.success(
-          `✅ Fulfilled promise ${position} in ${delay}ms`
-        );
+      .then(result => {
+        console.log(result);
       })
-      .catch(({ position, delay }) => {
-        Notiflix.Notify.failure(
-          `❌ Rejected promise ${position} in ${delay}ms`
-        );
+      .catch(error => {
+        console.log(error);
       });
   }
 });
@@ -45,19 +34,17 @@ function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
 
-    const { position: position, delay: delay } = promiseData;
-
-    // const { position, delay } = promiseData;
-
     setTimeout(() => {
       if (shouldResolve) {
-        resolve({ position, delay });
-        // Notiflix.Notify.success(
-        //   `✅ Fulfilled promise ${position} in ${delay}ms`
-        // );
+        return resolve(
+          Notiflix.Notify.success(
+            `✅ Fulfilled promise ${position} in ${delay}ms`
+          )
+        );
       }
-      reject({ position, delay });
-      // Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+      return reject(
+        Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`)
+      );
     }, delay);
   });
 }
