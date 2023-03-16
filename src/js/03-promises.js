@@ -42,19 +42,25 @@ formRef.addEventListener('submit', e => {
 });
 
 function createPromise(position, delay) {
+  const promiseData = { position: position, delay: delay };
+
+  const { position, delay } = promiseData;
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
+
+    // const promiseData = { position: position, delay: delay };
+
+    // const { position, delay } = promiseData;
 
     setTimeout(() => {
       if (shouldResolve) {
         resolve({ position, delay });
         // Notiflix.Notify.success(
         //   `✅ Fulfilled promise ${position} in ${delay}ms`
-        // )
-        // const promiseData = {};
+        // );
       }
       reject({ position, delay });
-      // Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`)
+      // Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
     }, delay);
   });
 }
