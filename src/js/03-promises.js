@@ -42,13 +42,10 @@ formRef.addEventListener('submit', e => {
 });
 
 function createPromise(position, delay) {
-  const promiseData = { position: position, delay: delay };
-
-  const { position, delay } = promiseData;
   return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
 
-    // const promiseData = { position: position, delay: delay };
+    const { position: position, delay: delay } = promiseData;
 
     // const { position, delay } = promiseData;
 
