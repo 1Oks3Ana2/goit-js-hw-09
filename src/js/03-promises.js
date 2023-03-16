@@ -21,12 +21,8 @@ formRef.addEventListener('submit', e => {
     promiseDelay += step;
 
     createPromise(position, promiseDelay)
-      .then(result => {
-        console.log(result);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+      .then(result => result)
+      .catch(error => error);
   }
 });
 
